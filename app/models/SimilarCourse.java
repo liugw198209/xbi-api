@@ -36,8 +36,8 @@ public class SimilarCourse{
     @Column(name = "similarity")
     public Double similarity;
     
-    @Column(name = "site_id")
-    public Long siteId;
+//    @Column(name = "site_id")
+//    public Long siteId;
 
     @Column(name = "url")
     public String courseURL;
@@ -48,11 +48,11 @@ public class SimilarCourse{
     @Column(name = "category2")
     public String subCategory;
 
-    @Column(name = "description")
-    public String description;
-
-    @Column(name = "update_date")
-    public Date updateDate;
+//    @Column(name = "description")
+//    public String description;
+//
+//    @Column(name = "update_date")
+//    public Date updateDate;
 
     public SimilarCourse() {}
     
