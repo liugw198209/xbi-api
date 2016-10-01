@@ -20,5 +20,6 @@ libraryDependencies ++= Seq(
 // other, legacy style, accesses its actions statically.
 routesGenerator := InjectedRoutesGenerator
 
+PlayKeys.externalizeResources := false
 
 fork in run := true

@@ -48,9 +48,9 @@ public class SimilarCourse{
     @Column(name = "category2")
     public String subCategory;
 
-//    @Column(name = "description")
-//    public String description;
-//
+    @Column(name = "description")
+    public String description;
+
 //    @Column(name = "update_date")
 //    public Date updateDate;
 
