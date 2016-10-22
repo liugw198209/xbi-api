@@ -12,9 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
-@Table(name="le_scourse_comment")
-public class Comment {
-    public static String TABLE = Comment.class.getSimpleName();
+@Table(name="le_scourse_like")
+public class CourseLike {
+    public static String TABLE = CourseLike.class.getSimpleName();
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -32,23 +32,18 @@ public class Comment {
     public String userName;
     
     @Constraints.Required
-    @Column(name = "comment")
-    public String comment;
+    @Column(name = "like_course")
+    public Short like_course;
     
-    @Constraints.Required
-    @Column(name = "rating")
-    public Float rating;
+    @Column(name = "like_date")
+    public Date likeDate;
     
-    @Column(name = "comment_date")
-    public Date commentDate;
-    
-    public Comment() {
+    public CourseLike() {
     }
-    public Comment(Long courseId, String comment, Float rating) { 
+    public CourseLike(Long courseId, Short like) { 
     	this.courseId = courseId;
-    	this.comment = comment;
-    	this.rating = rating;
-    	this.commentDate = new Timestamp(new Date().getTime());
+    	this.like_course = like;
+    	this.likeDate = new Timestamp(new Date().getTime());
     }
 
     /**
@@ -65,7 +60,7 @@ public class Comment {
         } if (obj == null || obj.getClass() != this.getClass()) {
             return false;
         }
-        Comment aux = (Comment) obj;
+        CourseLike aux = (CourseLike) obj;
 
         if (id != null && aux.id != null)
             return (id == aux.id);

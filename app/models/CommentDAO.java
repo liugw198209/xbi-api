@@ -3,8 +3,10 @@ package models;
 import play.*;
 import play.mvc.*;
 import play.db.jpa.*;
+
 import java.util.List;
 import java.util.Date;
+import java.util.Map;
 
 import javax.persistence.*;
 
@@ -96,5 +98,15 @@ public class CommentDAO {
      */
     public static Long count(Long courseId) {
         return (Long) JPA.em().createQuery("SELECT count(m) FROM " + Comment.TABLE + " m where course_id=" + courseId).getSingleResult();
+    }
+    
+    /**
+     * Get average rating of a course
+     *
+     * @return Object[]
+     */
+    public static Object[] rating(Long courseId) {
+    	TypedQuery<Object[]> q = JPA.em().createQuery("SELECT avg(rating), count(m) FROM " + Comment.TABLE + " m where course_id=" + courseId, Object[].class);
+    	return q.getSingleResult();
     }
 }

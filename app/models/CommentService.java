@@ -7,6 +7,7 @@ import play.db.jpa.*;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class CommentService {
     /**
@@ -103,5 +104,15 @@ public class CommentService {
      */
     public static Long count(Long courseId) {
         return CommentDAO.count(courseId);
+    }
+    
+    /**
+     * Get average rating of a course
+     *
+     * @return Object[]
+     */
+    public static Object[] rating(Long courseId) {
+        Object[] rlt = CommentDAO.rating(courseId);
+        return rlt;
     }
 }

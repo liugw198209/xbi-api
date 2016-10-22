@@ -1,7 +1,6 @@
 package controllers;
 
 import java.util.List;
-import java.util.Map;
 
 import play.*;
 import play.mvc.*;
@@ -9,13 +8,14 @@ import play.libs.Json;
 import play.libs.Json.*;
 import play.data.Form;
 import play.db.jpa.*;
+
 import models.*;
 import views.html.*;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-public class CommentController extends Controller {
-    static Form<Comment> commentForm = Form.form(Comment.class);
+public class CourseLikeController extends Controller {
+    static Form<CourseLike> likeForm = Form.form(CourseLike.class);
 
     /**
      * Add the content-type json to response
@@ -39,7 +39,7 @@ public class CommentController extends Controller {
     }
 
     /**
-     * Get the comments with pagination
+     * Get the likes with pagination
      *
      * @param Integer page
      * @param Integer size
@@ -48,39 +48,38 @@ public class CommentController extends Controller {
      */
     @Transactional(readOnly = true)
     public Result list(Long courseId, Integer page, Integer size) {
-        List models = CommentService.paginate(courseId, page-1, size);
-        Long count = CommentService.count(courseId);
+        List models = CourseLikeService.paginate(courseId, page-1, size);
+        Long count = CourseLikeService.count(courseId);
 
         ObjectNode result = Json.newObject();
         result.put("data", Json.toJson(models));
         result.put("total", count);
-        if (page > 1) result.put("link-prev", routes.CommentController.list(courseId, page-1, size).toString());
-        if (page*size < count) result.put("link-next", routes.CommentController.list(courseId, page+1, size).toString());
-        result.put("link-self", routes.CommentController.list(courseId, page, size).toString());
+        if (page > 1) result.put("link-prev", routes.CourseLikeController.list(courseId, page-1, size).toString());
+        if (page*size < count) result.put("link-next", routes.CourseLikeController.list(courseId, page+1, size).toString());
+        result.put("link-self", routes.CourseLikeController.list(courseId, page, size).toString());
 
         return jsonResult(ok(result));
     }
     
     /**
-     * Get ratings of a course
+     * Get the likes with pagination
      *
-     * @param Long courseId 
+     * @param Long courseId
+     *
      * @return Result
      */
     @Transactional(readOnly = true)
-    public Result rating(Long courseId) {
-        Object[] rating = CommentService.rating(courseId);
+    public Result total(Long courseId) {
+        Long likeCount = CourseLikeService.likes(courseId);
 
         ObjectNode result = Json.newObject();
-        result.put("rating", (Double) rating[0]);
-        result.put("count", (Long) rating[1]);
+        result.put("totalLikes", likeCount);
 
         return jsonResult(ok(result));
     }
 
-
     /**
-     * Get one comment by id
+     * Get one CourseLike by id
      *
      * @param Integer id
      *
@@ -88,48 +87,48 @@ public class CommentController extends Controller {
      */
     @Transactional(readOnly = true)
     public Result get(Long id) {
-        Comment comment = CommentService.find(id);
-        if (comment == null ) {
+    	CourseLike like = CourseLikeService.find(id);
+        if (like == null ) {
             ObjectNode result = Json.newObject();
             result.put("error", "Not found " + id);
             return jsonResult(notFound(result));
         }
-        return jsonResult(ok(Json.toJson(comment)));
+        return jsonResult(ok(Json.toJson(like)));
     }
 
     /**
-     * Create an comment with the data of request
+     * Create an CourseLike with the data of request
      *
      * @return Result
      */
     @Transactional
     public Result create() {
     	//Logger.info("create a comment");
-        Form<Comment> comment = commentForm.bindFromRequest();
-        if (comment.hasErrors()) {
-            return jsonResult(badRequest(comment.errorsAsJson()));
+        Form<CourseLike> like = likeForm.bindFromRequest();
+        if (like.hasErrors()) {
+            return jsonResult(badRequest(like.errorsAsJson()));
         }
-        Comment newComment = CommentService.create(comment.get());
-        return jsonResult(created(Json.toJson(newComment)));
+        CourseLike newLike = CourseLikeService.create(like.get());
+        return jsonResult(created(Json.toJson(newLike)));
     }
 
     /**
-     * Update an employee with the data of request
+     * Update an CourseLike with the data of request
      *
      * @return Result
      */
     @Transactional
     public Result update() {
-        Form<Comment> comment = commentForm.bindFromRequest();
-        if (comment.hasErrors()) {
-            return jsonResult(badRequest(comment.errorsAsJson()));
+        Form<CourseLike> like = likeForm.bindFromRequest();
+        if (like.hasErrors()) {
+            return jsonResult(badRequest(like.errorsAsJson()));
         }
-        Comment updatedComment = CommentService.update(comment.get());
-        return jsonResult(ok(Json.toJson(updatedComment)));
+        CourseLike updatedLike = CourseLikeService.update(like.get());
+        return jsonResult(ok(Json.toJson(updatedLike)));
     }
 
     /**
-     * Delete an long by comment id
+     * Delete an long by CourseLike id
      *
      * @param Long mid
      *
@@ -137,7 +136,7 @@ public class CommentController extends Controller {
      */
     @Transactional
     public Result deleteSingle(Long mid) {
-        if (CommentService.delete(mid)) {
+        if (CourseLikeService.delete(mid)) {
             ObjectNode result = Json.newObject();
             result.put("msg", "Deleted " + mid);
             return jsonResult(ok(result));
@@ -148,14 +147,14 @@ public class CommentController extends Controller {
     }
     
     /**
-     * delete all comments w.r.t courseId and userId
+     * delete all CourseLike w.r.t courseId and userId
      * @param courseId
      * @param userId
      * @return
      */
     @Transactional
     public Result delete(Long courseId, Long userId) {
-    	if (CommentService.delete(courseId, userId)) {
+    	if (CourseLikeService.delete(courseId, userId)) {
             ObjectNode result = Json.newObject();
             result.put("msg", "Deleted " + "courseId=" + courseId + ", userId=" + userId);
             return jsonResult(ok(result));

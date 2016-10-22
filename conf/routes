@@ -24,11 +24,25 @@ GET     /similar                    controllers.SimilarController.list(id: Long,
 GET     /comments                   controllers.CommentController.list(id: Long, page: Integer ?= 1, size: Integer ?= 3)
 DELETE  /comments                   controllers.CommentController.delete(id: Long, uid: Long)
 
+GET     /rating                   controllers.CommentController.rating(id: Long)
+
 GET     /comment 				    controllers.CommentController.get(mid: Long)
 POST    /comment                    controllers.CommentController.create()
 PUT     /comment                    controllers.CommentController.update()
 PATCH   /comment                    controllers.CommentController.update()
 DELETE  /comment                    controllers.CommentController.deleteSingle(mid: Long)
+
+# Course Like
+GET     /likes                      controllers.CourseLikeController.list(id: Long, page: Integer ?= 1, size: Integer ?= 3)
+DELETE  /likes                      controllers.CourseLikeController.delete(id: Long, uid: Long)
+
+GET     /likes/total                controllers.CourseLikeController.total(id: Long)
+
+GET     /like 			     	    controllers.CourseLikeController.get(lid: Long)
+POST    /like                       controllers.CourseLikeController.create()
+PUT     /like                       controllers.CourseLikeController.update()
+PATCH   /like                       controllers.CourseLikeController.update()
+DELETE  /like                       controllers.CourseLikeController.deleteSingle(lid: Long)
 
 
 # Map static resources from the /public folder to the /assets URL path
