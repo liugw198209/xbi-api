@@ -154,7 +154,7 @@ public class CommentController extends Controller {
      * @return
      */
     @Transactional
-    public Result delete(Long courseId, Long userId) {
+    public Result delete(Long courseId, String userId) {
     	if (CommentService.delete(courseId, userId)) {
             ObjectNode result = Json.newObject();
             result.put("msg", "Deleted " + "courseId=" + courseId + ", userId=" + userId);

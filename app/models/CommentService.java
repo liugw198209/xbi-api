@@ -66,7 +66,7 @@ public class CommentService {
      * @param userId
      * @return
      */
-    public static Boolean delete(Long courseId, Long userId){
+    public static Boolean delete(Long courseId, String userId){
     	List<Comment> comments = CommentDAO.find(courseId, userId);
         if (comments != null && comments.size() > 0) {
         	comments.forEach(comment -> {CommentDAO.delete(comment.id);});

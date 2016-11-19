@@ -44,8 +44,8 @@ public class CommentDAO {
      * @param userId
      * @return
      */
-    public static List<Comment> find(Long courseId, Long userId){
-    	return (List<Comment>) JPA.em().createQuery("SELECT m FROM " + Comment.TABLE + " m where course_id=" + courseId + " and user_id=" + userId + " ORDER BY comment_date desc").getResultList();
+    public static List<Comment> find(Long courseId, String userId){
+    	return (List<Comment>) JPA.em().createQuery("SELECT m FROM " + Comment.TABLE + " m where course_id=" + courseId + " and user_id='" + userId + "' ORDER BY comment_date desc").getResultList();
     }
 
     /**

@@ -38,8 +38,8 @@ public class CourseLikeDAO {
      * @param userId
      * @return
      */
-    public static List<CourseLike> find(Long courseId, Long userId){
-    	return (List<CourseLike>) JPA.em().createQuery("SELECT m FROM " + CourseLike.TABLE + " m where course_id=" + courseId + " and user_id=" + userId + " ORDER BY like_date desc").getResultList();
+    public static List<CourseLike> find(Long courseId, String userId){
+    	return (List<CourseLike>) JPA.em().createQuery("SELECT m FROM " + CourseLike.TABLE + " m where course_id=" + courseId + " and user_id='" + userId + "' ORDER BY like_date desc").getResultList();
     }
 
     /**

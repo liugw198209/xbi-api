@@ -22,7 +22,7 @@ GET     /similar                    controllers.SimilarController.list(id: Long,
 
 # Course comments
 GET     /comments                   controllers.CommentController.list(id: Long, page: Integer ?= 1, size: Integer ?= 3)
-DELETE  /comments                   controllers.CommentController.delete(id: Long, uid: Long)
+DELETE  /comments                   controllers.CommentController.delete(id: Long, uid: String)
 
 GET     /rating                   controllers.CommentController.rating(id: Long)
 
@@ -34,7 +34,7 @@ DELETE  /comment                    controllers.CommentController.deleteSingle(m
 
 # Course Like
 GET     /likes                      controllers.CourseLikeController.list(id: Long, page: Integer ?= 1, size: Integer ?= 3)
-DELETE  /likes                      controllers.CourseLikeController.delete(id: Long, uid: Long)
+DELETE  /likes                      controllers.CourseLikeController.delete(id: Long, uid: String)
 
 GET     /likes/total                controllers.CourseLikeController.total(id: Long)
 

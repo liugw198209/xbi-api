@@ -61,7 +61,7 @@ public class CourseLikeService {
      * @param userId
      * @return
      */
-    public static Boolean delete(Long courseId, Long userId){
+    public static Boolean delete(Long courseId, String userId){
     	List<CourseLike> likes = CourseLikeDAO.find(courseId, userId);
         if (likes != null && likes.size() > 0) {
         	likes.forEach(like -> {CourseLikeDAO.delete(like.id);});
